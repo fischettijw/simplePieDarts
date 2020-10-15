@@ -1,12 +1,7 @@
 const diam = 500;
 const pointSize = 1;
 
-let darts;
-let dartBatch;
-let inCircle;
-let pie;
-let outputDiv;
-let seed;
+let darts, dartBatch, inCircle, pie, outputDiv, seed;
 
 function initialize() {
     darts = 0;
@@ -15,7 +10,7 @@ function initialize() {
     outputDiv = createDiv().style('font-size', '18pt');
     dartBatch = 100;
     seed = null; // seed = 1;  ==>  3.14159 & 1356 darts    null ==> NO SEED
-    randomSeed(seed); // randomSeed(1) 3.14159 & 1356 darts
+    randomSeed(seed);
 }
 
 function setup() {
@@ -58,5 +53,7 @@ function generateDarts(n) {
 }
 
 function output() {
-    outputDiv.html(`DARTS: ${darts} <br> PIE: ${nf(pie,1,5)}`);
+    outputDiv.html(`DIAM: ${diam} <br>
+                    PIE: ${nf(pie,1,5)} <br>
+                    DARTS: ${darts}`);
 }
