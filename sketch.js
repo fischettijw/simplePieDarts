@@ -6,6 +6,7 @@ let dartBatch;
 let inCircle;
 let pie;
 let outputDiv;
+let seed;
 
 function initialize() {
     darts = 0;
@@ -13,12 +14,14 @@ function initialize() {
     pie = 0;
     outputDiv = createDiv().style('font-size', '18pt');
     dartBatch = 100;
+    seed = null; // seed = 1;  ==>  3.14159 & 1356 darts    null ==> NO SEED
+    randomSeed(seed); // randomSeed(1) 3.14159 & 1356 darts
 }
 
 function setup() {
     initialize();
     createCanvas(diam, diam);
-    background('gray');
+    background('lightgray');
     strokeWeight(1);
     stroke('red');
     fill('white');
@@ -31,11 +34,13 @@ function draw() {
 }
 
 function generateDarts(n) {
+    let radius, x, y, dartRadius, ratio;
+
     for (i = 0; i < n; i++) {
-        let radius = diam / 2;
-        let x = random(0, diam);
-        let y = random(0, diam);
-        let dartRadius = sqrt((x - radius) * (x - radius) + (y - radius) * (y - radius));
+        radius = diam / 2;
+        x = random(0, diam);
+        y = random(0, diam);
+        dartRadius = sqrt((x - radius) * (x - radius) + (y - radius) * (y - radius));
         // let dartRadius = dist(x, y, radius, radius);
         if (dartRadius < radius) {
             stroke('red');
@@ -46,8 +51,9 @@ function generateDarts(n) {
         strokeWeight(pointSize);
         point(x, y);
         darts++;
-        let ratio = inCircle / darts;
+        ratio = inCircle / darts;
         pie = 4 * ratio;
+        if (pie > 3.1414 && pie < 3.1417) { noLoop(); break; }
     }
 }
 
