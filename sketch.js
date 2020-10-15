@@ -1,15 +1,18 @@
 const diam = 500;
-const pointSize = 3;
+const pointSize = 1;
+
 let darts;
+let dartBatch;
 let inCircle;
 let pie;
-let output;
+let outputDiv;
 
 function initialize() {
     darts = 0;
     inCircle = 0;
     pie = 0;
-    output = createDiv().style('font-size', '18pt');
+    outputDiv = createDiv().style('font-size', '18pt');
+    dartBatch = 100;
 }
 
 function setup() {
@@ -23,25 +26,31 @@ function setup() {
 }
 
 function draw() {
-    generateDarts();
-    output.html(`DARTS: ${darts} <br> PIE: ${nf(pie,1,5)}`);
+    generateDarts(dartBatch);
+    output();
 }
 
-function generateDarts() {
-    let radius = diam / 2;
-    let x = random(0, diam);
-    let y = random(0, diam);
-    let dartRadius = sqrt((x - radius) * (x - radius) + (y - radius) * (y - radius));
-    // let dartRadius = dist(x, y, radius, radius);
-    if (dartRadius < radius) {
-        stroke('red');
-        inCircle++;
-    } else {
-        stroke('black');
+function generateDarts(n) {
+    for (i = 0; i < n; i++) {
+        let radius = diam / 2;
+        let x = random(0, diam);
+        let y = random(0, diam);
+        let dartRadius = sqrt((x - radius) * (x - radius) + (y - radius) * (y - radius));
+        // let dartRadius = dist(x, y, radius, radius);
+        if (dartRadius < radius) {
+            stroke('red');
+            inCircle++;
+        } else {
+            stroke('black');
+        }
+        strokeWeight(pointSize);
+        point(x, y);
+        darts++;
+        let ratio = inCircle / darts;
+        pie = 4 * ratio;
     }
-    strokeWeight(pointSize);
-    point(x, y);
-    darts++;
-    let ratio = inCircle / darts;
-    pie = 4 * ratio;
+}
+
+function output() {
+    outputDiv.html(`DARTS: ${darts} <br> PIE: ${nf(pie,1,5)}`);
 }
